@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-3">
+    <h1 class="text-center">{{course.coursename}}</h1>
+</div>
+<div class="container my-5">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Hole</th>
+                <th scope="col">Par</th>
+                <th scope="col">Length</th>
+                <th scope="col">edit link</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for hole in holes %}
+            <tr>
+                <td>{{hole.holenum}}</td>
+                <td>{{hole.holepar}}</td>
+                <td>{{hole.holelength}}</td>
+                <td><a class="badge badge-info" href="{{ url_for('edithole', coursename=course.coursename, holenum=hole.holenum) }}">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-primary" href="{{ url_for('courses') }}" role="button">Return</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,25 +1,19 @@
 {% extends "base.html" %}
-
+{% from 'bootstrap/form.html' import render_form %}
+{% from 'bootstrap/form.html' import render_field %}
 {% block content %}
-<h1>Sign In</h1>
-<form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.username.label }}<br>
-        {{ form.username(size=32) }}<br>
-        {% for error in form.username.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.password.label }}<br>
-        {{ form.password(size=32) }}<br>
-        {% for error in form.password.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-    <p>{{ form.submit() }}</p>
-</form>
-<p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+<div class="row h-100">
+    <div class="col-md-6 h-75 mx-auto my-auto">
+        <h1 class="text-center">LOG IN</h1>
+        <div class="col-md-4 mx-auto">
+            <form method="post">
+                {{ form.csrf_token() }}
+                {{ render_field(form.username) }}
+                {{ render_field(form.password) }}
+                {{ render_field(form.submit) }}
+            </form>
+            <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+        </div>
+    </div>
+</div>
 {% endblock %}

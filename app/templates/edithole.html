@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form %}
+{% from 'bootstrap/form.html' import render_field %}
+{% block content %}
+<div class="container my-3">
+    <h1 class="text-center">Edit {{coursename}} Hole</h1>
+</div>
+<div class="container my-5">
+    <form method="post">
+        {{ form.csrf_token() }}
+        {{ render_field(form.holepar) }}
+        {{ render_field(form.holelength) }}
+        {{ render_field(form.submit) }}
+    </form>
+</div>
+{% endblock %}

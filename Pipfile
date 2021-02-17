@@ -13,6 +13,8 @@ email-validator = "*"
 flask-login = "*"
 psycopg2 = "*"
 gunicorn = "*"
+pyowm = "*"
+bootstrap-flask = "*"
 
 [dev-packages]
 

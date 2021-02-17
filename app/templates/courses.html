@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-3">
+    <h1 class="text-center">Courses</h1>
+</div>
+<div class="container my-5">
+    <a class="btn btn-primary btn-lg btn-block" href="{{ url_for('createcourse') }}" role="button">Create New Course</a>
+</div>
+<div class="container my-3">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Course</th>
+                <th scope="col">Location</th>
+                <th scope="col">View</th>
+                <th scope="col">Statistics</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.coursename }}</td>
+                <td>{{ course.courselocation }}</td>
+                <td><a class="badge badge-info" href="{{ url_for('course', coursename=course.coursename) }}">View</a></td>
+                <td><a class="badge badge-info"
+                        href="{{ url_for('analyzecourse', coursename=course.coursename) }}">Statistics</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="d-flex">
+        <div class="mr-auto p-2">
+            {% if prev_url %}
+            <a href="{{ prev_url }}">Previous</a>
+            {% endif %}
+        </div>
+        <div class="ml-auto p-2">
+            {% if next_url %}
+            <a href="{{ next_url }}">Next</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

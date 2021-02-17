@@ -1,10 +1,59 @@
 {% extends "base.html" %}
-
 {% block content %}
-<h1>Hi, {{ user.username }}!</h1>
-{% for post in posts %}
-<div>
-    <p>{{ post.author.username }} says: <b>{{ post.body }}</b></p>
+<div class="container my-3">
+    <h1 class="text-center">Hello {{ current_user.username }}</h1>
 </div>
-{% endfor %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-primary btn-lg btn-block" href="{{ url_for('createround') }}" role="button">Start New Round</a>
+        </div>
+        <div class="col">
+            <a class="btn btn-primary btn-lg btn-block" href="{{ url_for('courses') }}" role="button">Analyze Courses</a>
+        </div>
+    </div>
+</div>
+<div class="container my-3">
+    <h2 class="text-center">Past Rounds</h2>
+    {% if rounds|length > 0 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Course</th>
+                    <th scope="col">Par</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Weather</th>
+                    <th scope="col">Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for round in rounds %}
+                <tr>
+                    <td>{{ round.get_coursename() }}</td>
+                    <td>{{round.get_totalscorepar()}}</td>
+                    <td>{{ round.get_date() }}</td>
+                    <td><img src="{{ round.get_weatherurl() }}" alt="weather icon"></td>
+                    <td><a class="badge badge-info" href="{{ url_for('roundview', roundid = round.id)}}">View</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="d-flex">
+            <div class="mr-auto p-2">
+                {% if prev_url %}
+                <a href="{{ prev_url }}">Newer Rounds</a>
+                {% endif %}
+            </div>
+            <div class="ml-auto p-2">
+                {% if next_url %}
+                <a href="{{ next_url }}">Older Rounds</a>
+                {% endif %}
+            </div>
+        </div> 
+    {% else %}
+        <p class="text-center">
+            No past rounds. You can start round <a href="{{ url_for('createround') }}">here</a>
+        </p>
+    {% endif %}
+</div>  
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+{% from 'bootstrap/form.html' import render_form %}
+{% from 'bootstrap/form.html' import render_field %}
+<div class="container my-3">
+    <h1 class="text-center">Start New Round</h1>
+</div>
+<div class="container my-5">
+    {% if courses|length == 0 %}
+        <p>No Courses available. You can create course <a href="{{ url_for('createcourse') }}">here</a></p>
+    {% else %}
+        <form method="post">
+            {{ form.csrf_token() }}
+            {{ render_field(form.course) }}
+            {{ render_field(form.submit) }}
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

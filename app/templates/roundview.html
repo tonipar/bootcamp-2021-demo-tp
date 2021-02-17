@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container my-3">
+    <h1 class="text-center">Round Statistics</h1>
+</div>
+<div class="container my-5 h-100">
+    <table class="table table-inverse table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Hole</th>
+                {% for score in scores %}
+                <th scope="col">{{score.hole}}</th>
+                {% endfor%}
+                <th scope="col">Total +/-</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="col">Par</th>
+                {% for score in scores %}
+                <td class="table-active" scope="col">{{score.get_par(course.id)}}</td>
+                {% endfor%}
+                <td scope="col">{{course.get_coursepar()}}</td>
+            </tr>
+            <tr>
+                <th scope="col">Score</th>
+                {% for score in scores %}
+                    {% if  score.score == 1 %}
+                        {% if score.ob %}
+                            <td style="background: #ffff90; border-color: #ff0000; border-width: 4px;" scope="col">{{ score.score }}</td>
+                        {% else %}
+                            <td style="background: #ffff90" scope="col">{{ score.score }}</td>
+                        {% endif %}
+                    {% elif score.score - score.get_par(course.id) == -1 %}
+                        {% if score.ob %}
+                            <td style="background-color: rgba(62,195,0,.25); border-color: #ff0000; border-width: 4px;" scope="col">{{ score.score }}</td>
+                        {% else %}
+                            <td style="background-color: rgba(62,195,0,.25)" scope="col">{{ score.score }}</td>
+                        {% endif %}
+                    {% elif score.score - score.get_par(course.id) == -2 %}
+                        {% if score.ob %}
+                            <td style="background-color: rgba(62,195,0,.50); border-width: 4px;" scope="col">{{ score.score }}</td>
+                        {% else %}
+                            <td style="background-color: rgba(62,195,0,.50)" scope="col">{{ score.score }}</td>
+                        {% endif %}
+                    {% elif score.score - score.get_par(course.id) < -2 %}
+                        {% if score.ob %}
+                            <td style="background-color: rgba(62,195,0,.75); border-color: #ff0000; border-width: 4px;" scope="col">{{ score.score }}</td>
+                        {% else %}
+                            <td style="background-color: rgba(62,195,0,.75)" scope="col">{{ score.score }}</td>
+                        {% endif %}
+                    {% elif score.score - score.get_par(course.id) == 1 %}
+                        {% if score.ob %}
+                            <td style="background-color: rgba(244,43,3,.25); border-color: #ff0000; border-width: 4px;" scope="col">{{ score.score }}</td>
+                        {% else %}
+                            <td style="background-color: rgba(244,43,3,.25)" scope="col">{{ score.score }}</td>
+                        {% endif %}
+                    {% elif score.score - score.get_par(course.id) == 2 %}
+                        {% if score.ob %}
+                            <td style="background-color: rgba(244,43,3,.50); border-color: #ff0000; border-width: 4px;" scope="col">{{ score.score }}</td>
+                        {% else %}
+                            <td style="background-color: rgba(244,43,3,.50)" scope="col">{{ score.score }}</td>
+                        {% endif %}
+                    {% elif score.score - score.get_par(course.id) > 2 %}
+                        {% if score.ob %}
+                            <td style="background-color: rgba(244,43,3,.75); border-color: #ff0000; border-width: 4px;" scope="col">{{ score.score }}</td>
+                        {% else %}
+                            <td style="background-color: rgba(244,43,3,.75)" scope="col">{{ score.score }}</td>
+                        {% endif %}
+                    {% else %}
+                        {% if score.ob %}
+                            <td style="border-color: #ff0000; border-width: 4px;" scope="col">{{ score.score }}</td>
+                        {% else %}
+                            <td scope="col">{{ score.score }}</td>
+                        {% endif %}
+                    {% endif %}
+                {% endfor%}
+                <td scope="col">{{round.get_totalscorepar()}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-primary" href="{{ url_for('index') }}" role="button">Return</a>
+    </div>
+    <div class="d-flex justify-content-center h-50">
+        <a class="btn btn-warning my-auto" href="{{ url_for('delete', roundid = round.id) }}" role="button">Delete</a>
+    </div>
+</div>
+{% endblock %}

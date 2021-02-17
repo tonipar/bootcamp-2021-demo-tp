@@ -3,24 +3,13 @@
 {% from 'bootstrap/form.html' import render_field %}
 {% block content %}
 <div class="container my-3">
-    <h1 class="text-center">Register</h1>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul class=flashes>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    {% block body %}{% endblock %}
+    <h1 class="text-center">Edit Profile</h1>
 </div>
 <div class="container my-5">
     <form method="post">
         {{ form.csrf_token() }}
         {{ render_field(form.username) }}
         {{ render_field(form.email) }}
-        {{ render_field(form.password) }}
         {{ render_field(form.submit) }}
     </form>
 </div>

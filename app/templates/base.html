@@ -1,34 +1,74 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    {% if title %}
-    <title>{{ title }} - Microblog</title>
-    {% else %}
-    <title>Welcome to Microblog</title>
-    {% endif %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block styles %}
+        <!-- Bootstrap CSS -->
+        {{ bootstrap.load_css() }}
+    {% endblock %}
+    <style>
+        html, 
+        body {
+            height: 100%;
+        }
+    </style>
+    <title>Disc Golf CaddyBook</title>
 </head>
-
 <body>
-    <div>
-        Microblog:
-        <a href="{{ url_for('index') }}">Home</a>
-        {% if current_user.is_anonymous %}
-        <a href="{{ url_for('login') }}">Login</a>
-        {% else %}
-        <a href="{{ url_for('logout') }}">Logout</a>
-        {% endif %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="navbar-brand" href="{{ url_for('index') }}">Disc Golf CaddyBook</a>
+                </li>
+                {% if current_user.is_anonymous %}
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('courses') }}">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('createround') }}">Start new round</a>
+                    </li>
+                {% endif %}    
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {% if current_user.is_anonymous %}
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('user', username=current_user.username) }}">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid h-100">
+        <!-- application content needs to be provided in the content block -->
+    <!-- 
+        <div class="container my-3">
+            <h1 class="text-center">Courses</h1>
+        </div>
+        <div class="container my-5">
+        </div>
+        <div class="container my-3">
+        </div> 
+    -->
+        {% block content %}{% endblock %}
     </div>
-    <hr>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    {% block content %}{% endblock %}
+    {% block scripts %}
+        {{ bootstrap.load_js() }}
+    {% endblock %}
 </body>
-
 </html>
