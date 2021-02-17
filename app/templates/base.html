@@ -55,16 +55,15 @@
         </div>
     </nav>
     <div class="container-fluid h-100">
-        <!-- application content needs to be provided in the content block -->
-    <!-- 
-        <div class="container my-3">
-            <h1 class="text-center">Courses</h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="d-flex">
+            {% for message in messages %}
+            <div class="p-2 bg-success mx-auto">{{ message }}</div>
+            {% endfor %}
         </div>
-        <div class="container my-5">
-        </div>
-        <div class="container my-3">
-        </div> 
-    -->
+        {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </div>
     {% block scripts %}

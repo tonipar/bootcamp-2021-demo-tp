@@ -6,6 +6,8 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, CreateCourse
 from app.models import User, Course, Hole, Round, Roundscore
 from datetime import datetime, date
 from pyowm.owm import OWM
+import os
+
 
 # Contains different URLs that app has
 
@@ -62,7 +64,6 @@ def register():
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
-    flash('test message')
     return render_template('register.html', title='Register', form=form)
 
 # User profile page
@@ -154,9 +155,10 @@ def createround():
         course = Course.query.filter_by(coursename=form.course.data).first_or_404()
         today = datetime.today()
         
-        owm = OWM('309d1acf125bea57bb26866e210087ca')
+        key = os.getenv("OWM_KEY")
+        owm = OWM(key)
         mgr = owm.weather_manager()
-        observation = mgr.weather_at_place("Kuopio")
+        observation = mgr.weather_at_place(course.courselocation)
         weather = observation.weather
         icon = weather.weather_icon_name
         
@@ -247,7 +249,7 @@ def delete(roundid):
             db.session.delete(score)
         db.session.delete(round)
         db.session.commit()
-        flash('Course has been deleted')
+        flash('Round has been deleted')
         return redirect(url_for('index'))
     flash("Delete failed")
     return redirect(url_for('index'))
