@@ -233,3 +233,21 @@ def analyzecourse(coursename):
         if rounds.has_prev else None
     return render_template('analyzecourse.html', title='Analyze Course', course=course, rounds=rounds.items, next_url=next_url,
                            prev_url=prev_url)
+
+@app.route('/delete/<roundid>')
+@login_required
+def delete(roundid):
+    round = Round.query.filter_by(id=roundid).first()
+    if round.rounduser_id == current_user.id:   
+        if Round is None:
+            flash('Round Not Found')
+            return redirect(url_for('index'))
+        scores = Roundscore.query.filter_by(round_id=roundid)
+        for score in scores:
+            db.session.delete(score)
+        db.session.delete(round)
+        db.session.commit()
+        flash('Course has been deleted')
+        return redirect(url_for('index'))
+    flash("Delete failed")
+    return redirect(url_for('index'))
