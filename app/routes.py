@@ -20,7 +20,7 @@ def index():
     Route for mainpage. Create pagination for rounds played by user 
     """
     page = request.args.get('page', 1, type=int)
-    rounds = current_user.get_rounds().paginate(page,3,False)
+    rounds = current_user.get_rounds().paginate(page,5,False)
     next_url = url_for('index', page=rounds.next_num) \
         if rounds.has_next else None
     prev_url = url_for('index', page=rounds.prev_num) \

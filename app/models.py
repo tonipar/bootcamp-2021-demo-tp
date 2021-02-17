@@ -50,7 +50,7 @@ class User(UserMixin, db.Model):
     """
     def get_rounds(self):
         playedrounds = Round.query.filter_by(rounduser_id=self.id)
-        return playedrounds.order_by(Round.rounddate.desc())
+        return playedrounds.order_by(Round.id.desc())
 
     """
     ___repr__ method tells python how to print objects of user
