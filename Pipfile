@@ -15,6 +15,7 @@ psycopg2 = "*"
 gunicorn = "*"
 pyowm = "*"
 bootstrap-flask = "*"
+pdoc = "*"
 
 [dev-packages]
 
