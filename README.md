@@ -1,6 +1,6 @@
 # Disc Golf Caddy Book
 
-Disc Golf Caddy Book is demo app for Code Bootcamp 2021 course. You can create disc golf rounds and keep track your scores. It also shows what holes need more training by showing a mean score for a hole.
+Disc Golf Caddy Book is demo app for Code Bootcamp 2021 course. You can create disc golf rounds and keep track your scores. It also shows what holes need more training by showing a mean score for a hole. This app has been made using https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world as reference.
 
 ## Installation
 
