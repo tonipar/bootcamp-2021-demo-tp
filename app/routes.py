@@ -150,7 +150,7 @@ def course(coursename):
     route for course page. 
     """
     course = Course.query.filter_by(coursename=coursename).first_or_404()
-    holes = Hole.query.filter_by(holecourse_id=course.id)
+    holes = Hole.query.filter_by(holecourse_id=course.id).order_by(Hole.holenum.asc())
     return render_template('course.html', course=course, holes=holes)
 
 @app.route('/edithole/<coursename>/<holenum>', methods=['GET', 'POST'])
