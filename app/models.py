@@ -88,7 +88,7 @@ class Course(db.Model):
         get_rounds will retrieve every round user has created for this course object and return them
         """
         rounds = Round.query.filter_by(roundcourse_id=self.id, rounduser_id=userid)
-        return rounds
+        return rounds.order_by(Round.id.desc())
 
     def get_holemean(self, userid, holenum):
         """
